@@ -1,0 +1,26 @@
+name: Build
+
+on:
+  push:
+    tags:
+      - "*"
+  workflow_dispatch:
+
+jobs:
+  webdade:
+    name: Webdade
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build VM disk image
+        run: nix --accept-flake-config build .#nixosConfigurations.webdade.config.system.build.VMA
+      - name: Upload Proxmox generated VM image
+        uses: actions/upload-artifact@v4
+        with:
+          name: webdade
+          path: ${{ github.workspace }}/result/nixos.qcow2
