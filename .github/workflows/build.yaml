@@ -18,8 +18,8 @@ jobs:
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build VM disk image
-        run: nix --accept-flake-config build .#nixosConfigurations.webdade.config.system.build.VMA
-      - name: Upload Proxmox generated VM image
+        run: nix --accept-flake-config build .#nixosConfigurations.webdade.config.system.build.qcow
+      - name: Upload the generated VM image into GitHub
         uses: actions/upload-artifact@v4
         with:
           name: webdade
