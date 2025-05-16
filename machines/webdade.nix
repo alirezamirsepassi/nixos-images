@@ -10,9 +10,20 @@
   boot = {
     growPartition = true;
     kernelParams = ["console=ttyS0"];
+    initrd.availableKernelModules = [
+      "ahci"
+      "xhci_pci"
+      "virtio_pci"
+      "virtio_scsi"
+      "sd_mod"
+      "sr_mod"
+    ];
     loader = {
-      grub.device = "/dev/vda";
       timeout = 0;
+      grub = {
+        enable = true;
+        device = "/dev/vda";
+      };
     };
   };
 
